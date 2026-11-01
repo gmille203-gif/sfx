@@ -1,0 +1,4 @@
+allow audioserver audioserver_tmpfs file { read write execute }
+allow audioserver vendor_file file { read execute open getattr }
+allow hal_audio_default vendor_file file { read execute open }
+allow mediaserver vendor_file file { read execute }

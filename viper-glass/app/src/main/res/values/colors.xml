@@ -1,0 +1,7 @@
+<resources>
+    <color name="viper_red">#FF3B30</color>
+    <color name="viper_cyan">#00D9FF</color>
+    <color name="viper_bg">#09090B</color>
+    <color name="viper_card">#1C1C1E</color>
+    <color name="viper_green">#30D158</color>
+</resources>

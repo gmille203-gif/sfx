@@ -1,0 +1,7 @@
+id=SFX-ViPER-Glass
+name=SFX Glass ViPER Universal
+version=v3.0.0-Glass
+versionCode=30000
+author=SFX Glass Team (based on ViPER4Android RE by pittvandewitt, MrWhite214, Zackptg5)
+description=🎛️ Universal ViPER4Android RE + SFX Music Player • iOS Liquid Glass UI • HIDL+AIDL Auto • Magisk/KSU/APatch • Android 9-15
+updateJson=https://raw.githubusercontent.com/gmille203-gif/sfx/main/update.json

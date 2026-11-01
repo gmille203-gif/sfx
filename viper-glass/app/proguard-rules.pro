@@ -1,0 +1,3 @@
+-keep class com.sfx.viperglass.** { *; }
+-keep class androidx.media3.** { *; }
+-keep class android.media.audiofx.** { *; }

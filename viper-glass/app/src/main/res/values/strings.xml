@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SFX Glass</string>
+    <string name="app_subtitle">ViPER • Studio • Player</string>
+    <string name="master_on">MASTER ON</string>
+    <string name="master_off">MASTER OFF</string>
+    <string name="driver_active">Driver aktif • libv4a_re.so</string>
+    <string name="driver_inactive">Driver tidak aktif — Install Module</string>
+    <string name="tab_home">Home</string>
+    <string name="tab_eq">EQ</string>
+    <string name="tab_lab">Lab</string>
+    <string name="tab_player">Player</string>
+    <string name="tab_presets">Presets</string>
+    <string name="onboarding_title1">Selamat datang di SFX Glass</string>
+    <string name="onboarding_desc1">ViPER4Android dengan desain iOS Liquid Glass. Audio studio di saku kamu.</string>
+</resources>
