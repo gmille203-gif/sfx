@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>ViPER Glass — Preview iOS Style</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#09090B;color:#fff;overflow-x:hidden}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(15,15,17,0.7);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+  .nav b{font-size:18px;letter-spacing:-0.5px}
+  .nav span{font-size:12px;opacity:0.6}
+  .hero{padding:32px 20px 12px}
+  .hero h1{font-size:38px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+  .hero p{opacity:0.6;margin-top:10px;font-size:14px;line-height:1.5;max-width:600px}
+  .tabs{display:flex;gap:8px;padding:16px 20px;overflow:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .chip{padding:10px 18px;border-radius:24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+  .chip.active{background:#FF3B30;color:#fff;border-color:#FF3B30;transform:scale(1.05)}
+  .chip:hover{transform:scale(1.02)}
+  .grid{padding:0 16px 100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;max-width:900px;margin:0 auto}
+  .card{background:rgba(28,28,30,0.6);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:18px;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);cursor:pointer;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-2px) scale(1.01);border-color:rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+  .card:active{transform:scale(0.98)}
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .toggle{width:48px;height:30px;background:rgba(120,120,128,0.3);border-radius:30px;position:relative;transition:0.3s;cursor:pointer}
+  .toggle.on{background:#30D158}
+  .toggle i{position:absolute;top:2px;left:2px;width:26px;height:26px;background:#fff;border-radius:50%;transition:0.3s cubic-bezier(0.32,0.72,0,1);box-shadow:0 2px 6px rgba(0,0,0,0.2)}
+  .toggle.on i{transform:translateX(18px)}
+  .card h3{font-size:16px;font-weight:700;letter-spacing:-0.3px}
+  .card p{font-size:12px;opacity:0.5;margin-top:4px;line-height:1.4}
+  .slider{margin-top:14px}
+  .slider-top{display:flex;justify-content:space-between;font-size:11px;opacity:0.6;margin-bottom:6px}
+  .track{height:6px;background:rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;position:relative}
+  .fill{height:100%;background:linear-gradient(90deg,#00D9FF,#FF3B30);border-radius:10px;transition:width 0.5s cubic-bezier(0.32,0.72,0,1)}
+  .master{grid-column:1/-1;background:linear-gradient(135deg,rgba(255,59,48,0.15),rgba(0,217,255,0.15));border:1px solid rgba(255,59,48,0.2);text-align:center;padding:24px}
+  .master h2{font-size:22px}
+  .power{width:96px;height:96px;margin:16px auto;background:linear-gradient(135deg,#FF3B30,#FF6B30);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 30px rgba(255,59,48,0.5);animation:pulse 2s infinite;cursor:pointer;transition:transform 0.15s}
+  .power:active{transform:scale(0.93)}
+  @keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(255,59,48,0.5),0 0 60px rgba(255,59,48,0.2)}50%{box-shadow:0 0 40px rgba(255,59,48,0.7),0 0 80px rgba(255,59,48,0.3)}}
+  .spec{height:64px;display:flex;align-items:end;gap:2px;margin-top:12px;justify-content:center}
+  .bar{flex:1;max-width:6px;background:linear-gradient(to top,#00D9FF,#FF3B30);border-radius:4px 4px 0 0;animation:wave 0.8s ease-in-out infinite alternate}
+  @keyframes wave{from{height:20%}to{height:90%}}
+  .mockups{padding:20px;max-width:1100px;margin:0 auto}
+  .mockups h2{font-size:20px;margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+  .mock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .mock{border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);background:#1C1C1E}
+  .mock img{width:100%;display:block;aspect-ratio:0.5;object-fit:cover}
+  .mock p{padding:12px;font-size:13px;font-weight:600}
+  .mock span{font-size:12px;opacity:0.5;font-weight:400}
+  .tabbar{position:fixed;bottom:0;left:0;right:0;background:rgba(20,20,22,0.85);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom));max-width:500px;margin:0 auto;left:50%;transform:translateX(-50%);width:100%;border-radius:24px 24px 0 0}
+  .tab{flex:1;text-align:center;font-size:10px;opacity:0.5;cursor:pointer;transition:0.2s;padding:4px}
+  .tab.active{opacity:1;color:#FF3B30}
+  .tab i{font-size:20px;display:block;margin-bottom:2px}
+  .tag{display:inline-block;padding:4px 10px;border-radius:20px;background:rgba(255,59,48,0.15);color:#FF3B30;font-size:11px;font-weight:700;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="nav"><b>◐ ViPER Glass</b> <span>v2.1.1 → v3.0 Glass • Clean iOS</span></div>
+
+<div class="hero">
+  <h1>Clean.<br>Responsive.<br><span style="background:linear-gradient(90deg,#00D9FF,#FF3B30);-webkit-background-clip:text;-webkit-text-fill-color:transparent">iOS Glass.</span></h1>
+  <p>Upgrade ViPER4Android RE dari Material generic → <b>Liquid Glass iOS style</b> dengan full spring animation, haptic, blur vibrancy & per-device intelligence. Preview interaktif di bawah — tap toggle untuk merasakan.</p>
+  <span class="tag">📄 Full analisa: docs/ANALISA_VIPER4ANDROID.md</span>
+</div>
+
+<div class="tabs" id="chips">
+  <div class="chip active" data-filter="all">All Effects</div>
+  <div class="chip" data-filter="bass">Bass</div>
+  <div class="chip" data-filter="space">Space</div>
+  <div class="chip" data-filter="clarity">Clarity</div>
+  <div class="chip" data-filter="pro">Pro</div>
+</div>
+
+<div class="grid" id="grid">
+  <div class="card master">
+    <h2>MASTER POWER</h2>
+    <div class="power" onclick="this.style.transform='scale(0.9)';setTimeout(()=>this.style.transform='',150);navigator.vibrate&&navigator.vibrate(40)">⏻</div>
+    <p style="opacity:0.7;font-size:13px">Driver <b style="color:#30D158">● Active</b> • libv4a_re.so • HIDL</p>
+    <div class="spec" id="spec"></div>
+    <p style="font-size:11px;opacity:0.4;margin-top:6px">64-bar Live Spectrum • 60fps</p>
+  </div>
+
+  <div class="card" data-cat="bass">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#FF3B30,#FF9500)">𝄞</div><div><h3>Bass Booster</h3><p>Deep low-end + mono control</p></div></div><div class="toggle on" onclick="this.classList.toggle('on');navigator.vibrate&&navigator.vibrate(20)"><i></i></div></div>
+    <div class="slider"><div class="slider-top"><span>Strength</span><span>78%</span></div><div class="track"><div class="fill" style="width:78%"></div></div></div>
+  </div>
+
+  <div class="card" data-cat="clarity">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#00D9FF,#007AFF)">✦</div><div><h3>Clarity</h3><p>XHiFi + vocal presence</p></div></div><div class="toggle on" onclick="this.classList.toggle('on')"><i></i></div></div>
+    <div class="slider"><div class="slider-top"><span>Amount</span><span>62%</span></div><div class="track"><div class="fill" style="width:62%"></div></div></div>
+  </div>
+
+  <div class="card" data-cat="space">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#AF52DE,#5856D6)">◐</div><div><h3>Convolver IRS</h3><p>Impulse response studio</p></div></div><div class="toggle" onclick="this.classList.toggle('on')"><i></i></div></div>
+    <p style="font-size:11px;opacity:0.4">Kernel: <b>Small Speakers.wav</b></p>
+  </div>
+
+  <div class="card" data-cat="space">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#30D158,#00C7BE)">◎</div><div><h3>Reverb</h3><p>Room size • 3D preview</p></div></div><div class="toggle on" onclick="this.classList.toggle('on')"><i></i></div></div>
+    <div class="slider"><div class="slider-top"><span>Room</span><span>Medium Hall</span></div><div class="track"><div class="fill" style="width:45%"></div></div></div>
+  </div>
+
+  <div class="card" data-cat="pro">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#FFD60A,#FF9500)">▅</div><div><h3>FET Compressor</h3><p>Punch & sustain</p></div></div><div class="toggle on" onclick="this.classList.toggle('on')"><i></i></div></div>
+    <div class="slider"><div class="slider-top"><span>Threshold</span><span>-12 dB</span></div><div class="track"><div class="fill" style="width:55%"></div></div></div>
+  </div>
+
+  <div class="card" data-cat="pro">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#007AFF,#00D9FF)">≡</div><div><h3>Equalizer</h3><p>10-band • AutoEQ</p></div></div><div class="toggle on"><i></i></div></div>
+    <div class="spec" style="height:40px;gap:3px"><div class="bar" style="height:30%"></div><div class="bar" style="height:50%;animation-delay:0.1s"></div><div class="bar" style="height:70%;animation-delay:0.2s"></div><div class="bar" style="height:45%;animation-delay:0.15s"></div><div class="bar" style="height:60%;animation-delay:0.05s"></div><div class="bar" style="height:35%;animation-delay:0.25s"></div><div class="bar" style="height:55%;animation-delay:0.12s"></div><div class="bar" style="height:40%;animation-delay:0.18s"></div><div class="bar" style="height:65%;animation-delay:0.08s"></div><div class="bar" style="height:25%;animation-delay:0.22s"></div></div>
+  </div>
+
+  <div class="card" data-cat="bass">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#FF375F,#FF2D55)">♡</div><div><h3>DDC</h3><p>Device dependent correction</p></div></div><div class="toggle" onclick="this.classList.toggle('on')"><i></i></div></div>
+    <p style="font-size:11px;opacity:0.4">Device: <b>Sony WH-1000XM5</b> • AutoEQ ✓</p>
+  </div>
+
+  <div class="card" data-cat="space">
+    <div class="card-head"><div style="display:flex;gap:12px;align-items:center"><div class="icon" style="background:linear-gradient(135deg,#BF5AF2,#5856D6)">◑</div><div><h3>Surround</h3><p>Field • Headphone • Diff</p></div></div><div class="toggle" onclick="this.classList.toggle('on')"><i></i></div></div>
+  </div>
+</div>
+
+<div class="mockups">
+  <h2>🎨 Mockup iOS Glass — 4 Layar Utama</h2>
+  <p style="opacity:0.5;font-size:13px;margin-bottom:14px">Tap gambar untuk zoom • Clean responsive • Full animation • SF Pro typography</p>
+  <div class="mock-grid">
+    <div class="mock"><img src="docs/mockup-home.png"><p>Home Dashboard <br><span>Master + spectrum + device switcher + bento</span></p></div>
+    <div class="mock"><img src="docs/mockup-eq.png"><p>EQ Studio <br><span>Bezier curve + sliders iOS + A/B + AutoEQ</span></p></div>
+    <div class="mock"><img src="docs/mockup-lab.png"><p>Lab Bento <br><span>2×2 grid + sheet detail • haptics</span></p></div>
+    <div class="mock"><img src="docs/mockup-presets.png"><p>Presets Gallery <br><span>Masonry + cloud + artwork • share</span></p></div>
+  </div>
+
+  <h2>📋 Mekanisme Kerja (Singkat)</h2>
+  <div style="background:rgba(255,255,255,0.06);border-radius:16px;padding:18px;font-size:13px;line-height:1.7;margin-bottom:16px">
+    <b>APK</b> (Compose + Hilt + Room) → <b>ViperService</b> (Foreground) → <b>AudioEffect</b> (UUID 90380da3…) → <b>libv4a_re.so</b> di <b>AudioFlinger</b> memproses PCM real-time (EQ/Convolver/Reverb/Bass/Compressor dll).<br><br>
+    <b>Module Magisk</b> patch <code>audio_effects.conf/xml</code> + copy SO ke <code>/vendor/lib/soundfx</code>, <b>service.sh</b> melakukan bind-mount live untuk KSU/APatch tanpa reboot. Lengkapnya di <a href="docs/ANALISA_VIPER4ANDROID.md" style="color:#00D9FF">ANALISA_VIPER4ANDROID.md</a>.
+  </div>
+
+  <h2>🚀 Rekomendasi Fitur Baru</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:100px">
+    <div class="card"><h3>🎛️ Live Spectrum</h3><p>64-bar FFT 60fps, overlay EQ curve — WOW factor</p><span class="tag">Tier 1 • Must</span></div>
+    <div class="card"><h3>📱 Per-App Profile</h3><p>Spotify ≠ YouTube ≠ Game — auto switch preset per app</p><span class="tag">Tier 1 • Killer</span></div>
+    <div class="card"><h3>⚖️ A/B Compare</h3><p>Toggle 2 setting instan + morph slider (pro workflow)</p><span class="tag">Tier 1</span></div>
+    <div class="card"><h3>🪄 AutoEQ</h3><p>Cari headphone model → 1-tap calibration (oratory1990)</p><span class="tag">Tier 2 • High</span></div>
+    <div class="card"><h3>🎨 Preset Cloud</h3><p>Gallery masonry + artwork + community share via QR</p><span class="tag">Tier 2 • Viral</span></div>
+    <div class="card"><h3>📳 Haptics Full</h3><p>Spring animation + haptic di semua interaksi — iOS feel</p><span class="tag">Tier 1 • Free win</span></div>
+  </div>
+</div>
+
+<div class="tabbar">
+  <div class="tab active"><i>⌂</i>Home</div>
+  <div class="tab"><i>≡</i>EQ</div>
+  <div class="tab"><i>⬢</i>Lab</div>
+  <div class="tab"><i>♡</i>Presets</div>
+  <div class="tab"><i>◯</i>Me</div>
+</div>
+
+<script>
+  // spectrum bars
+  const spec=document.getElementById('spec');
+  for(let i=0;i<32;i++){const b=document.createElement('div');b.className='bar';b.style.height=(15+Math.random()*70)+'%';b.style.animationDelay=(Math.random()*0.4)+'s';spec.appendChild(b)}
+  setInterval(()=>{[...spec.children].forEach(b=>b.style.height=(15+Math.random()*75)+'%')},180)
+  // chips filter
+  document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));c.classList.add('active')
+    const f=c.dataset.filter;
+    document.querySelectorAll('.card[data-cat]').forEach(card=>{
+      card.style.display=(f==='all'||card.dataset.cat===f)?'':'none';
+      if(card.style.display==='') card.animate([{transform:'scale(0.96)',opacity:0.5},{transform:'scale(1)',opacity:1}],{duration:300,easing:'cubic-bezier(0.34,1.56,0.64,1)'})
+    })
+  }))
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');navigator.vibrate&&navigator.vibrate(15)}))
+</script>
+</body>
+</html>
